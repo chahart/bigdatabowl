@@ -5,20 +5,18 @@ import pandas as pd
 import plotly
 import plotly.express as px
 import plotly.graph_objects as go
-import matplotlib.pyplot as plt
 import numpy as np
 
 
 # app = Dash(__name__, external_stylesheets=[dbc.themes.BOOTSTRAP])
 app = dash.Dash()
-server = app.server
 
 
 teams = {
     'Arizona Cardinals': 'ARI','Atlanta Falcons': 'ATL','Baltimore Ravens': 'BAL','Buffalo Bills': 'BUF','Carolina Panthers': 'CAR','Chicago Bears': 'CHI',
     'Cincinnati Bengals': 'CIN','Cleveland Browns': 'CLE','Dallas Cowboys': 'DAL','Denver Broncos': 'DEN','Detroit Lions': 'DET',
     'Green Bay Packers': 'GB','Houston Texans': 'HOU','Indianapolis Colts': 'IND','Jacksonville Jaguars': 'JAX','Kansas City Chiefs': 'KC','Las Vegas Raiders': 'LV',
-    'Los Angeles Chargers': 'LAC','Los Angeles Rams': 'LAR','Miami Dolphins': 'MIA','Minnesota Vikings': 'MIN','New England Patriots': 'NE',
+    'Los Angeles Chargers': 'LAC','Los Angeles Rams': 'LA','Miami Dolphins': 'MIA','Minnesota Vikings': 'MIN','New England Patriots': 'NE',
     'New Orleans Saints': 'NO','New York Giants': 'NYG','New York Jets': 'NYJ','Philadelphia Eagles': 'PHI','Pittsburgh Steelers': 'PIT','San Francisco 49ers': 'SF',
     'Seattle Seahawks': 'SEA','Tampa Bay Buccaneers': 'TB', 'Tennessee Titans': 'TEN','Washington Commanders': 'WAS'
 }
@@ -231,15 +229,48 @@ plays = pd.read_csv('plays.csv')
 pff = pd.read_csv('pffScoutingData.csv')
 players = pd.read_csv('players.csv')
 
-week1 = pd.read_csv('week1.csv')
-week2 = pd.read_csv('week2.csv')
-week3 = pd.read_csv('week3.csv')
-week4 = pd.read_csv('week4.csv')
-week5 = pd.read_csv('week5.csv')
-week6 = pd.read_csv('week6.csv')
-week7 = pd.read_csv('week7.csv')
-week8 = pd.read_csv('week8.csv')
-all_weeks = pd.concat([week1,week2,week3,week4,week5,week6,week7,week8])
+# week1 = pd.read_csv('week1.csv')
+# week2 = pd.read_csv('week2.csv')
+# week3 = pd.read_csv('week3.csv')
+# all_weeks = pd.concat([week1,week2,week3])
+all_weeks = pd.read_csv('modified_weeks.csv')
+# all_weeks_1 = all_weeks[(all_weeks['gameId'] == 2021091207) & (all_weeks['playId'] == 2244)]
+# all_weeks_2 = all_weeks[(all_weeks['gameId'] == 2021091200) & (all_weeks['playId'] == 2399)]
+# all_weeks_3 = all_weeks[(all_weeks['gameId'] == 2021091300) & (all_weeks['playId'] == 3712)]
+# all_weeks_4 = all_weeks[(all_weeks['gameId'] == 2021091201) & (all_weeks['playId'] == 3219)]
+# all_weeks_5 = all_weeks[(all_weeks['gameId'] == 2021091202) & (all_weeks['playId'] == 489)]
+# all_weeks_6 = all_weeks[(all_weeks['gameId'] == 2021091213) & (all_weeks['playId'] == 607)]
+# all_weeks_7 = all_weeks[(all_weeks['gameId'] == 2021091203) & (all_weeks['playId'] == 672)]
+# all_weeks_8 = all_weeks[(all_weeks['gameId'] == 2021091209) & (all_weeks['playId'] == 1085)]
+# all_weeks_9 = all_weeks[(all_weeks['gameId'] == 2021090900) & (all_weeks['playId'] == 97)]
+# all_weeks_10 = all_weeks[(all_weeks['gameId'] == 2021091212) & (all_weeks['playId'] == 912)]
+# all_weeks_11 = all_weeks[(all_weeks['gameId'] == 2021092000) & (all_weeks['playId'] == 1873)]
+# all_weeks_12 = all_weeks[(all_weeks['gameId'] == 2021091211) & (all_weeks['playId'] == 597)]
+# all_weeks_13 = all_weeks[(all_weeks['gameId'] == 2021091205) & (all_weeks['playId'] == 1212)]
+# all_weeks_14 = all_weeks[(all_weeks['gameId'] == 2021091903) & (all_weeks['playId'] == 761)]
+# all_weeks_15 = all_weeks[(all_weeks['gameId'] == 2021091904) & (all_weeks['playId'] == 444)]
+# all_weeks_16 = all_weeks[(all_weeks['gameId'] == 2021091913) & (all_weeks['playId'] == 2775)]
+# all_weeks_17 = all_weeks[(all_weeks['gameId'] == 2021091300) & (all_weeks['playId'] == 2951)]
+# all_weeks_18 = all_weeks[(all_weeks['gameId'] == 2021091208) & (all_weeks['playId'] == 2482)]
+# all_weeks_19 = all_weeks[(all_weeks['gameId'] == 2021091213) & (all_weeks['playId'] == 492)]
+# all_weeks_20 = all_weeks[(all_weeks['gameId'] == 2021091210) & (all_weeks['playId'] == 996)]
+# all_weeks_21 = all_weeks[(all_weeks['gameId'] == 2021091203) & (all_weeks['playId'] == 4528)]
+# all_weeks_22 = all_weeks[(all_weeks['gameId'] == 2021091210) & (all_weeks['playId'] == 1858)]
+# all_weeks_23 = all_weeks[(all_weeks['gameId'] == 2021091211) & (all_weeks['playId'] == 921)]
+# all_weeks_24 = all_weeks[(all_weeks['gameId'] == 2021092606) & (all_weeks['playId'] == 3339)]
+# all_weeks_25 = all_weeks[(all_weeks['gameId'] == 2021091202) & (all_weeks['playId'] == 1967)]
+# all_weeks_26 = all_weeks[(all_weeks['gameId'] == 2021091200) & (all_weeks['playId'] == 4112)]
+# all_weeks_27 = all_weeks[(all_weeks['gameId'] == 2021091201) & (all_weeks['playId'] == 454)]
+# all_weeks_28 = all_weeks[(all_weeks['gameId'] == 2021091204) & (all_weeks['playId'] == 1670)]
+# all_weeks_29 = all_weeks[(all_weeks['gameId'] == 2021091206) & (all_weeks['playId'] == 1745)]
+# all_weeks_30 = all_weeks[(all_weeks['gameId'] == 2021090900) & (all_weeks['playId'] == 1587)]
+# all_weeks_31 = all_weeks[(all_weeks['gameId'] == 2021091207) & (all_weeks['playId'] == 410)]
+# all_weeks_32 = all_weeks[(all_weeks['gameId'] == 2021091208) & (all_weeks['playId'] == 2046)]
+# new_all_weeks = pd.concat(all_weeks_1,all_weeks_2,all_weeks_3,all_weeks_4,all_weeks_5,all_weeks_6,all_weeks_7,all_weeks_8,
+#                 all_weeks_9,all_weeks_10,all_weeks_11,all_weeks_12,all_weeks_13,all_weeks_14,all_weeks_15,all_weeks_16,
+#                 all_weeks_17,all_weeks_18,all_weeks_19,all_weeks_20,all_weeks_21,all_weeks_22,all_weeks_23,all_weeks_24,
+#                 all_weeks_25,all_weeks_26,all_weeks_27,all_weeks_28,all_weeks_29,all_weeks_30,all_weeks_31,all_weeks_32)
+# new_all_weeks.to_csv('modifiedweeks.csv')
 
 def animate_play(tracking_df, play_df,players,pffScoutingData, gameId,playId,classnum):
        
@@ -667,23 +698,6 @@ def when_they_blitz(team,all_stunts):
             br_singleScoreL,br_singleScoreT,br_multScoreW,br_multScoreL,br_quarterOne,
             br_quarterTwo,br_quarterThree,br_quarterFour,br_fourman]
     
-    # print("Stunt Rates: {}".format(stunt_rates))
-    # print('-----')
-    # print("Blitz Rates: {}".format(blitz_rates))
-    
-    # plt.bar([1,2,3,4],stunt_rates[-4:])
-    # plt.xlabel("Quarter")
-    # plt.ylabel("Stunt Rate")
-    # ax = plt.gca()
-    # ax.set_xticks(np.arange(1,5,1))
-    # plt.show()
-    
-    # plt.bar([1,2,3,4],blitz_rates[-4:])
-    # plt.xlabel("Quarter")
-    # plt.ylabel("Blitz Rate")
-    # ax = plt.gca()
-    # ax.set_xticks(np.arange(1,5,1))
-    # plt.show()
     
     return [stunt_rates,blitz_rates]
      

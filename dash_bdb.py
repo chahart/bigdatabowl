@@ -10,7 +10,7 @@ import numpy as np
 
 # app = Dash(__name__, external_stylesheets=[dbc.themes.BOOTSTRAP])
 app = dash.Dash()
-
+server = app.server
 
 teams = {
     'Arizona Cardinals': 'ARI','Atlanta Falcons': 'ATL','Baltimore Ravens': 'BAL','Buffalo Bills': 'BUF','Carolina Panthers': 'CAR','Chicago Bears': 'CHI',

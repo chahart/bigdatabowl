@@ -7,12 +7,6 @@ import plotly.express as px
 import plotly.graph_objects as go
 import matplotlib.pyplot as plt
 import numpy as np
-import seaborn as sns
-from datetime import date, timedelta, datetime
-from scipy import stats
-import math
-import re
-import random
 
 
 # app = Dash(__name__, external_stylesheets=[dbc.themes.BOOTSTRAP])

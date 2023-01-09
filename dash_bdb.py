@@ -10,7 +10,7 @@ import numpy as np
 
 # app = Dash(__name__, external_stylesheets=[dbc.themes.BOOTSTRAP])
 app = dash.Dash()
-server = app.server
+
 
 teams = {
     'Arizona Cardinals': 'ARI','Atlanta Falcons': 'ATL','Baltimore Ravens': 'BAL','Buffalo Bills': 'BUF','Carolina Panthers': 'CAR','Chicago Bears': 'CHI',
@@ -129,6 +129,13 @@ all_stunts = all_stunts.drop(['...1','possessionTeam','yardlineNumber','yardline
                               'min_sec','npos_list'],axis = 1)
 all_stunts.iloc[0]
 
+plays = pd.read_csv('plays.csv')
+# week1 = pd.read_csv('/kaggle/input/nfl-big-data-bowl-2023/week1.csv')
+pff = pd.read_csv('pffScoutingData.csv')
+players = pd.read_csv('players.csv')
+
+all_weeks = pd.read_csv('new_mod_weeks.csv')
+
 def visualize_blitz_stunt(play_type, team, common_vs_effective,num_plays,only_4man):
     cve = common_vs_effective ## for simplicity
     pt = play_type ## for simplicity
@@ -180,9 +187,42 @@ def visualize_blitz_stunt(play_type, team, common_vs_effective,num_plays,only_4m
         stunts = pd.DataFrame(all_stunts.loc[(all_stunts.stunt_class == play_class[0])&(all_stunts.defensiveTeam == team)])
     if only_4man:
         stunts = stunts.loc[stunts.manfront == 1]
+    eyedeez = {
+    'ARI':[2021091207,2244], 
+    'ATL':[2021091200,2399], 
+    'BAL':[2021092602,2501], 
+    'BUF':[2021092600,2441], 
+    'CAR':[2021091202,489], 
+    'CHI':[2021092601,166], 
+    'CIN':[2021092607,3588], 
+    'CLE':[2021981209,1085], 
+    'DAL':[2021090900,97],
+    'DEN':[2021092609,2352], 
+    'DET':[2021092000,2437], 
+    'GB':[2021092000,201], 
+    'HOU':[2021091205,3151], 
+    'IND':[2021091903,761], 
+    'JAX':[2021091904,444], 
+    'KC':[2021091913,2775], 
+    'LA':[2021091908,2643], 
+    'LAC':[2021092604,1847], 
+    'LV':[2021091213,2881],
+    'MIA':[2021091905,2261], 
+    'MIN':[2021091203,4528], 
+    'NE':[2021092605,3197], 
+    'NO':[2021091211,921], 
+    'NYG':[2021092606,3339], 
+    'NYJ':[2021091202,1967], 
+    'PHI':[2021091200,4274], 
+    'PIT':[2021091201,1572], 
+    'SEA':[2021091204,1670], 
+    'SF':[2021091912,1746],
+    'TB':[2021090900,3724], 
+    'TEN':[2021091207,410], 
+    'WAS':[2021091600,2624]}
     ids = stunts.gameplayId.iloc[0].split('_')
-    gameId = int(ids[0])
-    playId = int(ids[1])
+    gameId = eyedeez[team][0]
+    playId = eyedeez[team][1]
     classnum = play_class[0]
     fig_1 = animate_play(all_weeks,plays,players,pff,gameId,playId,classnum)
     
@@ -224,53 +264,8 @@ colors = {
 'football':'#CBB67C'
 }
 
-plays = pd.read_csv('plays.csv')
-# week1 = pd.read_csv('/kaggle/input/nfl-big-data-bowl-2023/week1.csv')
-pff = pd.read_csv('pffScoutingData.csv')
-players = pd.read_csv('players.csv')
 
-# week1 = pd.read_csv('week1.csv')
-# week2 = pd.read_csv('week2.csv')
-# week3 = pd.read_csv('week3.csv')
-# all_weeks = pd.concat([week1,week2,week3])
-all_weeks = pd.read_csv('modified_weeks.csv')
-# all_weeks_1 = all_weeks[(all_weeks['gameId'] == 2021091207) & (all_weeks['playId'] == 2244)]
-# all_weeks_2 = all_weeks[(all_weeks['gameId'] == 2021091200) & (all_weeks['playId'] == 2399)]
-# all_weeks_3 = all_weeks[(all_weeks['gameId'] == 2021091300) & (all_weeks['playId'] == 3712)]
-# all_weeks_4 = all_weeks[(all_weeks['gameId'] == 2021091201) & (all_weeks['playId'] == 3219)]
-# all_weeks_5 = all_weeks[(all_weeks['gameId'] == 2021091202) & (all_weeks['playId'] == 489)]
-# all_weeks_6 = all_weeks[(all_weeks['gameId'] == 2021091213) & (all_weeks['playId'] == 607)]
-# all_weeks_7 = all_weeks[(all_weeks['gameId'] == 2021091203) & (all_weeks['playId'] == 672)]
-# all_weeks_8 = all_weeks[(all_weeks['gameId'] == 2021091209) & (all_weeks['playId'] == 1085)]
-# all_weeks_9 = all_weeks[(all_weeks['gameId'] == 2021090900) & (all_weeks['playId'] == 97)]
-# all_weeks_10 = all_weeks[(all_weeks['gameId'] == 2021091212) & (all_weeks['playId'] == 912)]
-# all_weeks_11 = all_weeks[(all_weeks['gameId'] == 2021092000) & (all_weeks['playId'] == 1873)]
-# all_weeks_12 = all_weeks[(all_weeks['gameId'] == 2021091211) & (all_weeks['playId'] == 597)]
-# all_weeks_13 = all_weeks[(all_weeks['gameId'] == 2021091205) & (all_weeks['playId'] == 1212)]
-# all_weeks_14 = all_weeks[(all_weeks['gameId'] == 2021091903) & (all_weeks['playId'] == 761)]
-# all_weeks_15 = all_weeks[(all_weeks['gameId'] == 2021091904) & (all_weeks['playId'] == 444)]
-# all_weeks_16 = all_weeks[(all_weeks['gameId'] == 2021091913) & (all_weeks['playId'] == 2775)]
-# all_weeks_17 = all_weeks[(all_weeks['gameId'] == 2021091300) & (all_weeks['playId'] == 2951)]
-# all_weeks_18 = all_weeks[(all_weeks['gameId'] == 2021091208) & (all_weeks['playId'] == 2482)]
-# all_weeks_19 = all_weeks[(all_weeks['gameId'] == 2021091213) & (all_weeks['playId'] == 492)]
-# all_weeks_20 = all_weeks[(all_weeks['gameId'] == 2021091210) & (all_weeks['playId'] == 996)]
-# all_weeks_21 = all_weeks[(all_weeks['gameId'] == 2021091203) & (all_weeks['playId'] == 4528)]
-# all_weeks_22 = all_weeks[(all_weeks['gameId'] == 2021091210) & (all_weeks['playId'] == 1858)]
-# all_weeks_23 = all_weeks[(all_weeks['gameId'] == 2021091211) & (all_weeks['playId'] == 921)]
-# all_weeks_24 = all_weeks[(all_weeks['gameId'] == 2021092606) & (all_weeks['playId'] == 3339)]
-# all_weeks_25 = all_weeks[(all_weeks['gameId'] == 2021091202) & (all_weeks['playId'] == 1967)]
-# all_weeks_26 = all_weeks[(all_weeks['gameId'] == 2021091200) & (all_weeks['playId'] == 4112)]
-# all_weeks_27 = all_weeks[(all_weeks['gameId'] == 2021091201) & (all_weeks['playId'] == 454)]
-# all_weeks_28 = all_weeks[(all_weeks['gameId'] == 2021091204) & (all_weeks['playId'] == 1670)]
-# all_weeks_29 = all_weeks[(all_weeks['gameId'] == 2021091206) & (all_weeks['playId'] == 1745)]
-# all_weeks_30 = all_weeks[(all_weeks['gameId'] == 2021090900) & (all_weeks['playId'] == 1587)]
-# all_weeks_31 = all_weeks[(all_weeks['gameId'] == 2021091207) & (all_weeks['playId'] == 410)]
-# all_weeks_32 = all_weeks[(all_weeks['gameId'] == 2021091208) & (all_weeks['playId'] == 2046)]
-# new_all_weeks = pd.concat(all_weeks_1,all_weeks_2,all_weeks_3,all_weeks_4,all_weeks_5,all_weeks_6,all_weeks_7,all_weeks_8,
-#                 all_weeks_9,all_weeks_10,all_weeks_11,all_weeks_12,all_weeks_13,all_weeks_14,all_weeks_15,all_weeks_16,
-#                 all_weeks_17,all_weeks_18,all_weeks_19,all_weeks_20,all_weeks_21,all_weeks_22,all_weeks_23,all_weeks_24,
-#                 all_weeks_25,all_weeks_26,all_weeks_27,all_weeks_28,all_weeks_29,all_weeks_30,all_weeks_31,all_weeks_32)
-# new_all_weeks.to_csv('modifiedweeks.csv')
+
 
 def animate_play(tracking_df, play_df,players,pffScoutingData, gameId,playId,classnum):
        

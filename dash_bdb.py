@@ -17,6 +17,7 @@ import random
 
 # app = Dash(__name__, external_stylesheets=[dbc.themes.BOOTSTRAP])
 app = dash.Dash()
+server = app.server
 
 
 teams = {
